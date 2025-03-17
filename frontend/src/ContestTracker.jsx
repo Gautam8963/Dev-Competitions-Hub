@@ -59,10 +59,10 @@ const ContestTracker = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-mono">
-      <div className="container mx-auto px-4 py-8">
+    <div className="w-screen h-screen overflow-auto bg-gradient-to-br from-gray-900 to-gray-800 text-white font-mono">
+      <div className="container mx-auto px-4 py-8 min-h-full flex flex-col">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <div className="bg-gradient-to-r from-purple-600 to-blue-500 inline-block text-transparent bg-clip-text">
             <h1 className="text-4xl font-bold mb-2">
               <FiCode className="inline-block mr-2" />
@@ -114,73 +114,75 @@ const ContestTracker = () => {
           </div>
         </div>
 
-        {/* Content */}
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
-          </div>
-        ) : error ? (
-          <div className="bg-red-900 p-4 rounded-lg text-center">
-            <p className="text-red-200">{error}</p>
-            <button 
-              className="mt-4 bg-red-700 hover:bg-red-800 px-6 py-2 rounded-lg text-white"
-              onClick={() => window.location.reload()}
-            >
-              Retry
-            </button>
-          </div>
-        ) : filteredContests.length === 0 ? (
-          <div className="bg-gray-800 p-6 rounded-lg text-center">
-            <p className="text-gray-300">No contests found matching your criteria.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredContests.map((contest, index) => (
-              <div 
-                key={index} 
-                className={`bg-gradient-to-br ${getPlatformStyles(contest.platform)} bg-opacity-10 rounded-xl p-6 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl`}
+        {/* Content - This will expand to fill available space */}
+        <div className="flex-grow">
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
+            </div>
+          ) : error ? (
+            <div className="bg-red-900 p-4 rounded-lg text-center">
+              <p className="text-red-200">{error}</p>
+              <button 
+                className="mt-4 bg-red-700 hover:bg-red-800 px-6 py-2 rounded-lg text-white"
+                onClick={() => window.location.reload()}
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r ${getPlatformStyles(contest.platform)}`}>
-                      {contest.platform}
-                    </span>
-                    <h2 className="text-xl font-bold mt-3 mb-2">{contest.name}</h2>
+                Retry
+              </button>
+            </div>
+          ) : filteredContests.length === 0 ? (
+            <div className="bg-gray-800 p-6 rounded-lg text-center">
+              <p className="text-gray-300">No contests found matching your criteria.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredContests.map((contest, index) => (
+                <div 
+                  key={index} 
+                  className={`bg-gradient-to-br ${getPlatformStyles(contest.platform)} bg-opacity-10 rounded-xl p-6 shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl`}
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className={`text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r ${getPlatformStyles(contest.platform)}`}>
+                        {contest.platform}
+                      </span>
+                      <h2 className="text-xl font-bold mt-3 mb-2">{contest.name}</h2>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mt-4">
+                    <div className="flex items-center text-gray-200">
+                      <FiCalendar className="mr-2" />
+                      <span>{formatDate(contest.startTime)}</span>
+                    </div>
+                    <div className="flex items-center text-gray-200">
+                      <FiClock className="mr-2" />
+                      <span>{contest.duration}</span>
+                    </div>
+                  </div>
+                  <div className="mt-6">
+                    <a 
+                      href={contest.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center bg-gray-900 bg-opacity-50 hover:bg-opacity-70 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
+                    >
+                      <FiExternalLink className="inline mr-2" />
+                      View Contest
+                    </a>
                   </div>
                 </div>
-                <div className="space-y-2 mt-4">
-                  <div className="flex items-center text-gray-200">
-                    <FiCalendar className="mr-2" />
-                    <span>{formatDate(contest.startTime)}</span>
-                  </div>
-                  <div className="flex items-center text-gray-200">
-                    <FiClock className="mr-2" />
-                    <span>{contest.duration}</span>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <a 
-                    href={contest.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-center bg-gray-900 bg-opacity-50 hover:bg-opacity-70 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out"
-                  >
-                    <FiExternalLink className="inline mr-2" />
-                    View Contest
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      
-      {/* Footer */}
-      <footer className="mt-16 py-8 border-t border-gray-800">
-        <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} Contest Tracker • Powered by Gautam Dhodi</p>
+              ))}
+            </div>
+          )}
         </div>
-      </footer>
+      
+        {/* Footer */}
+        <footer className="mt-auto py-6 border-t border-gray-800">
+          <div className="container mx-auto px-4 text-center text-gray-400">
+            <p>© {new Date().getFullYear()} Contest Tracker • Powered by LeetCode, Codeforces & CodeChef APIs</p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };

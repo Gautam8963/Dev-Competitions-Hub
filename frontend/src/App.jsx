@@ -3,9 +3,10 @@ import ContestTracker from './ContestTracker'
 
 function App() {
   return (
-    <>
-    <ContestTracker></ContestTracker>
-    </>
+    <div>
+        <ContestTracker></ContestTracker>
+    </div>
+
   )
 }
 
