@@ -5,7 +5,7 @@ import Hackathons from './Hackathons'
 function App() {
   return (
     <div>
-        {/* <ContestTracker></ContestTracker> */}
+        <ContestTracker></ContestTracker>
         <Hackathons></Hackathons>
     </div>
 
