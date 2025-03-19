@@ -10,44 +10,85 @@ app.use(cors());
 
 
 //Helper functions to find the hackathons
-async function getDevpostHackathonData() {
-  try{
-      const response = await axios.get("https://devpost.com/api/hackathons");
-      return response.data;
+async function fetchDevpostHackathonData() {
+  try {
+    const response = await axios.get("https://devpost.com/api/hackathons");
+    return response.data;  // Assuming it returns { hackathons: [...] }
   } catch (error) {
-      console.error('Error fetching Hackathons details:', error.message);
-      return { hackathons: [] };
+    console.error("Error fetching Devpost hackathons:", error.message);
+    return { hackathons: [] };
   }
 }
 
-async function getUnstopHackathonData() {
-  try{
-      const response = await axios.get("https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons");
-      return response.data;
-  } catch (error) {
-      console.error('Error fetching Hackathons details:', error.message);
-      return { hackathons: [] };
-  }
-}
+async function fetchUnstopHackathonData() {
+  let allHackathons = [];
+  let page = 1;
+  const perPage = 15;
+  let hasMoreData = true;
 
-//Get hackathons data
-app.get('/hackathons',async (req,res) => {
-  try{
-      const data = await getDevpostHackathonData();
-      res.json({
-          status: 'success',
-          length: data.hackathons.length,
-          data: data.hackathons
-      })
-  } catch (error) {
-      res.status(500).json({
-        status: 'error',
-        message: error.message
-      });
+  while (hasMoreData) {
+    try {
+      const url = `https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons&page=${page}&per_page=${perPage}&searchTerm=hackathons&oppstatus=open&quickApply=true`;
+
+      const response = await axios.get(url);
+      const hackathons = response.data.data || [];
+
+      if (hackathons.length > 0) {
+        allHackathons = [...allHackathons, ...hackathons];
+        console.log(`Fetched page ${page} with ${hackathons.length} hackathons`);
+        page++; // Move to the next page
+      } else {
+        hasMoreData = false; // No more data available
+      }
+    } catch (error) {
+      console.error("Error fetching Unstop hackathons:", error.message);
+      hasMoreData = false;
     }
-})
+  }
 
+  console.log(`Total Hackathons Fetched: ${allHackathons.length}`);
+  return allHackathons;
+}
 
+app.get('/hack', async (req, res) => {
+  try {
+    const contests = await fetchUnstopHackathonData();
+    
+    res.json({
+      status: 'success',
+      count: contests.length,
+      data: contests
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+});
+
+app.get("/hackathons", async (req, res) => {
+  try {
+    const [devpostData, unstopData] = await Promise.all([
+      fetchDevpostHackathonData(),
+      fetchUnstopHackathonData(),
+    ]);
+
+    // Merge hackathons from both sources
+    const allHackathons = [...(devpostData.hackathons || []), ...unstopData];
+
+    res.json({
+      status: "success",
+      count: allHackathons.length,
+      data: allHackathons,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+});
 
 // Root endpoint
 app.get('/', (req, res) => {
