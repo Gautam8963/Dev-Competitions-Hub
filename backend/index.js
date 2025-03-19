@@ -8,6 +8,47 @@ const PORT = process.env.PORT || 4000;
 // Enable CORS
 app.use(cors());
 
+
+//Helper functions to find the hackathons
+async function getDevpostHackathonData() {
+  try{
+      const response = await axios.get("https://devpost.com/api/hackathons");
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching Hackathons details:', error.message);
+      return { hackathons: [] };
+  }
+}
+
+async function getUnstopHackathonData() {
+  try{
+      const response = await axios.get("https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons");
+      return response.data;
+  } catch (error) {
+      console.error('Error fetching Hackathons details:', error.message);
+      return { hackathons: [] };
+  }
+}
+
+//Get hackathons data
+app.get('/hackathons',async (req,res) => {
+  try{
+      const data = await getDevpostHackathonData();
+      res.json({
+          status: 'success',
+          length: data.hackathons.length,
+          data: data.hackathons
+      })
+  } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+})
+
+
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
@@ -130,47 +171,6 @@ function calculateDuration(startDate, endDate) {
   
   return `${Math.floor(durationSeconds / 3600)} hours ${(durationSeconds % 3600) / 60} minutes`;
 }
-
-
-
-
-//Helper functions to find the hackathons
-async function getDevpostHackathonData() {
-    try{
-        const response = await axios.get("https://devpost.com/api/hackathons");
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching Hackathons details:', error.message);
-        return { hackathons: [] };
-    }
-}
-
-async function getUnstopHackathonData() {
-    try{
-        const response = await axios.get("https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons");
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching Hackathons details:', error.message);
-        return { hackathons: [] };
-    }
-}
-
-//Get hackathons data
-app.get('/hackathons',async (req,res) => {
-    try{
-        const data = await getDevpostHackathonData();
-        res.json({
-            status: 'success',
-            length: data.hackathons.length,
-            data: data.hackathons
-        })
-    } catch (error) {
-        res.status(500).json({
-          status: 'error',
-          message: error.message
-        });
-      }
-})
 
 
 // Endpoint to get all active contests
