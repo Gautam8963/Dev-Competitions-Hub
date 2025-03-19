@@ -31,25 +31,26 @@ async function fetchUnstopHackathonData() {
       const url = `https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons&page=${page}&per_page=${perPage}&searchTerm=hackathons&oppstatus=open&quickApply=true`;
 
       const response = await axios.get(url);
-      const hackathons = response.data.data || [];
+      console.log("API Response:", response.data); // Debugging response
+
+      const hackathons = response.data?.data || [];
 
       if (hackathons.length > 0) {
         allHackathons = [...allHackathons, ...hackathons];
         console.log(`Fetched page ${page} with ${hackathons.length} hackathons`);
         page++; // Move to the next page
       } else {
-        hasMoreData = false; // No more data available
+        hasMoreData = false; // Stop if no data
       }
     } catch (error) {
-      console.error("Error fetching Unstop hackathons:", error.message);
-      hasMoreData = false;
+      console.error("Error fetching Unstop hackathons:", error.response?.data || error.message);
+      hasMoreData = false; // Stop on error
     }
   }
 
   console.log(`Total Hackathons Fetched: ${allHackathons.length}`);
   return allHackathons;
 }
-
 app.get('/hack', async (req, res) => {
   try {
     const contests = await fetchUnstopHackathonData();

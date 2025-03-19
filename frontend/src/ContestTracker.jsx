@@ -25,6 +25,22 @@ const ContestTracker = () => {
       }
     };
 
+    const fetchHackathons = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:4000/contests');
+        if (!response.ok) {
+          throw new Error('Failed to fetch contests');
+        }
+        const data = await response.json();
+        setContests(data.data);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
     fetchContests();
   }, []);
 
