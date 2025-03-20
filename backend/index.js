@@ -51,22 +51,7 @@ async function fetchUnstopHackathonData() {
   console.log(`Total Hackathons Fetched: ${allHackathons.length}`);
   return allHackathons;
 }
-app.get('/hack', async (req, res) => {
-  try {
-    const contests = await fetchUnstopHackathonData();
-    
-    res.json({
-      status: 'success',
-      count: contests.length,
-      data: contests
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: error.message
-    });
-  }
-});
+
 
 app.get("/hackathons", async (req, res) => {
   try {
