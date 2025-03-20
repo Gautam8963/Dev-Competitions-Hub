@@ -1,12 +1,10 @@
 import './App.css'
-import ContestTracker from './ContestTracker'
-import Hackathons from './Hackathons'
+import CompetitionsTracker from './CompetitionsTracker'
 
 function App() {
   return (
     <div>
-        <ContestTracker></ContestTracker>
-        <Hackathons></Hackathons>
+        <CompetitionsTracker></CompetitionsTracker>
     </div>
 
   )
