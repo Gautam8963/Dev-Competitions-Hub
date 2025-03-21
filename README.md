@@ -1,4 +1,4 @@
-# Coding Contests & Hackathons Tracker
+# Dev Competitions Hub
 
 A web application that displays real-time coding contests from platforms like Codeforces, CodeChef, and LeetCode. It also fetches upcoming hackathons from Devpost using APIs. Built with the MERN stack, this project helps competitive programmers and developers stay updated with the latest challenges.
 
