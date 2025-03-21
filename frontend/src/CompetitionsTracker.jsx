@@ -389,8 +389,16 @@ const CompetitionsTracker = () => {
 
         {/* Footer */}
         <footer className="mt-16 py-6 border-t border-gray-200">
-          <div className="text-center text-gray-500 text-sm">
-            <p>© {new Date().getFullYear()} Dev Competitions Hub • Powered by developer platform APIs</p>
+          <div className="flex flex-1 justify-center text-center text-gray-500 text-sm">
+            <a href="">
+            <img width="48" height="48" src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin"/>
+            </a>
+            <a href="">
+            <img width="48" height="48" src="https://img.icons8.com/color/48/twitterx--v1.png" alt="twitterx--v1"/>
+            </a>
+            <a href="https://github.com/Gautam8963/">
+            <img width="48" height="48" src="https://img.icons8.com/glyph-neue/64/github.png" alt="github"/>
+            </a>
           </div>
         </footer>
       </div>
