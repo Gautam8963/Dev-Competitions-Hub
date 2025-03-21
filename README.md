@@ -27,24 +27,31 @@ A web application that displays real-time coding contests from platforms like Co
 
 2. **Install Dependencies**  
    - Backend  
+     ```sh
      cd backend
      npm install
-     
-   - Frontend 
+     ```
+   - Frontend  
+     ```sh
      cd frontend
      npm install
+     ```
 
 3. **Set Up Environment Variables**  
    Create a `.env` file in the root directory and configure API keys if required.
 
 4. **Run the Application**  
    - Start Backend  
-     npm run dev
+     ```sh
+     npm run server
+     ```
    - Start Frontend  
-     npm run dev
+     ```sh
+     npm start
+     ```
 
 5. **Access the Website**  
-   Visit `http://localhost:4000` in your browser.
+   Visit `http://localhost:3000` in your browser.
 
 ## 🎯 Future Enhancements
 
@@ -65,3 +72,4 @@ This project is open-source and available under the [MIT License](LICENSE).
 If you like this project, consider giving it a ⭐ on GitHub!
 
 ---
+
