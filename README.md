@@ -51,7 +51,7 @@ A web application that displays real-time coding contests from platforms like Co
      ```
 
 5. **Access the Website**  
-   Visit `http://localhost:3000` in your browser.
+   Visit `http://localhost:4000` in your browser.
 
 ## 🎯 Future Enhancements
 
