@@ -391,12 +391,12 @@ const CompetitionsTracker = () => {
         {/* Footer */}
         <footer className="mt-16 py-6 border-t border-gray-200">
           <div className="flex flex-1 justify-center text-center text-gray-500 text-sm">
-            <a href="">
+            <a href="https://www.linkedin.com/in/gautam-dhodi-848567237">
             <img width="48" height="48" src="https://img.icons8.com/color/48/linkedin.png" alt="linkedin"/>
             </a>
-            <a href="">
+            {/* <a href="">
             <img width="48" height="48" src="https://img.icons8.com/color/48/twitterx--v1.png" alt="twitterx--v1"/>
-            </a>
+            </a> */}
             <a href="https://github.com/Gautam8963/">
             <img width="48" height="48" src="https://img.icons8.com/glyph-neue/64/github.png" alt="github"/>
             </a>

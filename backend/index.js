@@ -31,7 +31,7 @@ async function fetchUnstopHackathonData() {
       const url = `https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons&page=${page}&per_page=${perPage}&searchTerm=hackathons&oppstatus=open&quickApply=true`;
 
       const response = await axios.get(url);
-      console.log("API Response:", response.data); // Debugging response
+      // console.log("API Response:", response.data); // Debugging response
 
       const hackathons = response.data?.data || [];
 
