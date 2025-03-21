@@ -11,13 +11,14 @@ const CompetitionsTracker = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [expanded, setExpanded] = useState({});
 
+  const url = 'https://contests-cyus.onrender.com';
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         
         // Fetch contests
-        const contestsResponse = await fetch('http://localhost:4000/contests');
+        const contestsResponse = await fetch(url+'/contests');
         if (!contestsResponse.ok) {
           throw new Error('Failed to fetch contests');
         }
@@ -25,7 +26,7 @@ const CompetitionsTracker = () => {
         setCompetitions(contestsData.data || []);
         
         // Fetch hackathons
-        const hackathonsResponse = await fetch('http://localhost:4000/hackathons');
+        const hackathonsResponse = await fetch(url+'/hackathons');
         if (!hackathonsResponse.ok) {
           throw new Error('Failed to fetch hackathons');
         }

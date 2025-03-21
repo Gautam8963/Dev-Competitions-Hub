@@ -37,7 +37,7 @@ async function fetchUnstopHackathonData() {
 
       if (hackathons.length > 0) {
         allHackathons = [...allHackathons, ...hackathons];
-        console.log(`Fetched page ${page} with ${hackathons.length} hackathons`);
+        // console.log(`Fetched page ${page} with ${hackathons.length} hackathons`);
         page++; // Move to the next page
       } else {
         hasMoreData = false; // Stop if no data
@@ -48,7 +48,7 @@ async function fetchUnstopHackathonData() {
     }
   }
 
-  console.log(`Total Hackathons Fetched: ${allHackathons.length}`);
+  // console.log(`Total Hackathons Fetched: ${allHackathons.length}`);
   return allHackathons;
 }
 
